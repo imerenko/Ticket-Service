@@ -76,6 +76,6 @@ The service is done as a Rest Service. All data is stored in memory.
   **3. Reserve and commit a specific group of held seats for a customer:**
  
 
-     curl -H "Content-Type: application/json" -X POST -d '{"seatHoldId" : "2", "customerEmail" : "imerenko@gmail.com"}' http://localhost:8080/rest/v1/reservations
+     curl -H "Content-Type: application/json" -X POST -d '{"seatHoldId" : "1", "customerEmail" : "my@gmail.com"}' http://localhost:8080/rest/v1/reservations
  
 
