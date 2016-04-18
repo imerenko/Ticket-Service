@@ -2,6 +2,7 @@ package com.my.ticketservice.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.my.ticketservice.domain.SeatHold;
 import com.my.ticketservice.service.TicketService;
+import com.my.ticketservice.util.IdGenerator;
 
 public class TicketControllerTest {
 
@@ -105,6 +107,16 @@ public class TicketControllerTest {
 		String actualMessage = ticketController.reserveSeats(body);
 		
 		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	public void recreateData() {
+		IdGenerator.getNextId();
+		
+		ticketController.recreateData();
+		
+		verify(ticketService).recreateVenue();
+		assertEquals(1, IdGenerator.getNextId());
 	}
 	
 }

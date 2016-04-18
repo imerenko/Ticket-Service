@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.my.ticketservice.dao.VenueRepository;
 import com.my.ticketservice.domain.SeatHold;
 import com.my.ticketservice.service.TicketService;
 import com.my.ticketservice.util.IdGenerator;
@@ -28,19 +27,16 @@ public class TicketController {
 	@Resource
 	private TicketService ticketService;
 
-	@Resource
-	private VenueRepository venueRepository;
-
 	@RequestMapping(method = RequestMethod.GET, value = "/seats", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String numSeatsAvailable(@RequestParam(value = "level", required = false) Integer venueLevelInt) {
-		Optional<Integer> venueLevel = getOptional(venueLevelInt);
+		Optional<Integer> venueLevel = Optional.ofNullable(venueLevelInt);
 		int num = ticketService.numSeatsAvailable(venueLevel);
 		return "{ \"numSeatsAvailable\": \"" + num + "\" }";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/holds", produces = MediaType.APPLICATION_JSON_VALUE)
 	public SeatHold findAndHoldSeats(@RequestBody FindAndHoldSeatsBody body) {
-		return ticketService.findAndHoldSeats(body.numSeats, getOptional(body.minLevel), getOptional(body.maxLevel),
+		return ticketService.findAndHoldSeats(body.numSeats, Optional.ofNullable(body.minLevel), Optional.ofNullable(body.maxLevel),
 				body.customerEmail);
 	}
 
@@ -52,17 +48,10 @@ public class TicketController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/recreatedata")
 	public void recreateData() {
-		venueRepository.recreateVenue();
+		ticketService.recreateVenue();
 		IdGenerator.reset();
 	}
 
-	private <T> Optional<T> getOptional(T value) {
-		if (value == null) {
-			return Optional.ofNullable(null);
-		} else {
-			return Optional.of(value);
-		}
-	}
 
 	static class FindAndHoldSeatsBody {
 		public int numSeats;

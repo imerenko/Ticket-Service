@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 import java.util.List;
 import java.util.Optional;
@@ -270,6 +271,13 @@ public class TicketServiceImplTest {
 		assertEquals(7, reservedSeats.size());
 		assertSeatAvalabilityType(reservedSeats, SeatAvailabilityType.RESERVED);
 		
+	}
+	
+	@Test
+	public void recreateVenueCallsRepository() {
+		ticketService.recreateVenue();
+		
+		verify(venueRepository).recreateVenue();
 	}
 
 	private void assertSeatAvalabilityType(List<Seat> reservedSeats, SeatAvailabilityType seatAvailabilityType) {

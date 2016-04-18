@@ -36,4 +36,11 @@ is assigned
 * @return a reservation confirmation code
 */
 String reserveSeats( int seatHoldId, String customerEmail);
+
+
+/**
+ * recreate Venue from Config
+ */
+void recreateVenue();
+
 }

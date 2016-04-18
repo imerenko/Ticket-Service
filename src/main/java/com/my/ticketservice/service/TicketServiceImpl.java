@@ -281,4 +281,14 @@ public class TicketServiceImpl implements TicketService {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.my.ticketservice.service.TicketService#recreateVenue()
+	 */
+	@Override
+	public void recreateVenue() {
+		venueRepository.recreateVenue();
+	}
+	
+	
+
 }
