@@ -35,7 +35,7 @@ public class RestResponseExceptionHandler {
 	@ResponseBody
 	protected String handleException(TicketServiceException ex) {
 		logger.error("TicketServiceException  " + ex.getMessage(), ex);
-		return ex.getMessage();
+		return generateExceptionMessage(ex.getMessage());
 	}
 
 	/**
@@ -52,7 +52,16 @@ public class RestResponseExceptionHandler {
 	@ResponseBody
 	protected String handleException(RuntimeException ex) {
 		logger.error("RuntimeException " + SERVER_ERROR, ex);
-		return SERVER_ERROR;
+		return generateExceptionMessage(SERVER_ERROR);
+	}
+	
+	/**
+	 * @param message message to send
+	 * @return json error message
+	 */
+	private String generateExceptionMessage(String message) {
+		 return "{ \"errorMessage\": \"" + message + "\" }";
+		
 	}
 
 }

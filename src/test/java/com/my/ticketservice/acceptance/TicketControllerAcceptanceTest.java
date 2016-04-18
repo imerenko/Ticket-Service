@@ -32,6 +32,7 @@ public class TicketControllerAcceptanceTest {
 
 	@Before
 	public void setUp() {
+		get("rest/v1/recreatedata");
 		RestAssured.port = port;
 	}
 

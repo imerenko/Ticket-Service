@@ -36,14 +36,15 @@ public class RestResponseExceptionHandlerTest {
 	public void handleExceptionRuntimeException() throws Exception {
 		mockMvc.perform(get("/api/runtimeException"))
 		.andExpect(status().isInternalServerError())
-		.andExpect(content().string(RestResponseExceptionHandler.SERVER_ERROR));
+		.andExpect(content().string(
+				"{ \"errorMessage\": \"" + RestResponseExceptionHandler.SERVER_ERROR + "\" }"));
 	}
 	
 	@Test
 	public void handleExceptionMediaAssetManagementException() throws Exception {
 		mockMvc.perform(get("/api/ticketServiceException"))
 		.andExpect(status().isBadRequest())
-		.andExpect(content().string("new exception"));
+		.andExpect(content().string("{ \"errorMessage\": \"new exception\" }"));
 	}
 	
 	
