@@ -26,12 +26,12 @@ The service is done as a Rest Service. All data is stored in memory.
  
  **Design Solutions:**
 
--The Service has classical architecture: controller->service-dao
+ -The Service has classical architecture: controller->service-dao
  - Venue data is stored in memory and will be erased after the redeploy
  - Concurrency problem is solved with pessimistic locks. All the write operations synchronized.  All the read operations are not    synchronized so they do not wait for the end of write operation.
--  Seat holds are cleaned by scheduler that runs every 60(possible to change value) seconds.
--  Exceptions are handled by handler that uses AOP with @ControllerAdvice and @ExceptionHandler
-   -   Configuration (venue data and expiration time) is stored in VenueConfig.java for simplicity.
+ -  Seat holds are cleaned by scheduler that runs every 60(possible to change value) seconds.
+ -  Exceptions are handled by handler that uses AOP with @ControllerAdvice and @ExceptionHandler
+ -  Configuration (venue data and expiration time) is stored in VenueConfig.java for simplicity.
 
     
 
@@ -64,21 +64,18 @@ The service is done as a Rest Service. All data is stored in memory.
  1. Find the number of seats available within the venue, optionally by seating level
  
 
-    curl -X GET http://localhost:8080/rest/v1/seats?level={level}
+     curl -X GET http://localhost:8080/rest/v1/seats?level={level}
 
  
  2. Find and hold the best available seats on behalf of a customer, potentially limited to specific levels. MinLevel and MaxLevel are optional
  
 
-    curl -H "Content-Type: application/json" -X POST -d '{"numSeats" : "10", "minLevel" : "2", "maxLevel" : "2","customerEmail" :"my@gmail.com"}' http://localhost:8080/rest/v1/holds
+     curl -H "Content-Type: application/json" -X POST -d '{"numSeats" : "10", "minLevel" : "2", "maxLevel" : "2","customerEmail" :"my@gmail.com"}' http://localhost:8080/rest/v1/holds
 
  
  3. Reserve and commit a specific group of held seats for a customer
  
 
-    curl -H "Content-Type: application/json" -X POST -d '{"seatHoldId" : "2", "customerEmail" : "imerenko@gmail.com"}' http://localhost:8080/rest/v1/reservations
-     
-    
-    
-    
+     curl -H "Content-Type: application/json" -X POST -d '{"seatHoldId" : "2", "customerEmail" : "imerenko@gmail.com"}' http://localhost:8080/rest/v1/reservations
+ 
 
