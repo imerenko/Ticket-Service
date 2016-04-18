@@ -45,7 +45,7 @@ The service is done as a Rest Service. All data is stored in memory.
 
      mvn clean test
 
- code coverage folder: {project}/target/site/index.html
+ code coverage folder: {project}/target/site/jacoco/index.html
  currently code coverage = 92%, branch coverage= 97%
  
  
