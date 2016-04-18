@@ -29,9 +29,10 @@ The service is done as a Rest Service. All data is stored in memory.
 
  - The Service has classical architecture: controller->service-dao
  - Venue data is stored in memory and will be erased after the redeploy
- - Concurrency problem is solved with pessimistic locks. All the write operations synchronized.  All the read operations are not    synchronized so they do not wait for the end of write operation.
+ - Concurrency problem is solved with pessimistic locks (for write operations). All the write operations synchronized.  All the read operations are not synchronized so they do not wait for the end of write operation. This will work only if the application is running on a single node (only one jvm). For a cluster mode distributed lock mechanism should be used (for example database select for update)
  -  Seat holds are cleaned by scheduler that runs every 60(possible to change value) seconds.
  -  Exceptions are handled by handler that uses AOP with @ControllerAdvice and @ExceptionHandler
+ -  Id Generator is done with AtomicInteger (works only if running on one jvm)
  -  Configuration (venue data and expiration time) is stored in VenueConfig.java for simplicity.
 
     
